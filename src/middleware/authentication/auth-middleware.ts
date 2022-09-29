@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import JWT from '../../utils/JWT';
 
-const tokenErr = 'دسترسی ارسال نشده است';
+const tokenErr = 'Token does not exist in header!';
 
 export async function authMiddleware(
   req: Request,
@@ -17,14 +17,14 @@ export async function authMiddleware(
       token = req.headers.authorization.split(' ')[1];
     } else {
       res.status(403).send({
-        message: 'خطای دسترسی',
+        message: 'Authorization failed',
       });
       throw Error(tokenErr);
     }
 
     if (!token) {
       res.status(403).send({
-        message: 'خطای دسترسی',
+        message: 'Authorization failed',
       });
     } else {
       try {
@@ -34,7 +34,7 @@ export async function authMiddleware(
           next();
         }
       } catch (error) {
-        res.status(401).send({ message: 'دسترسی نامعتبر می باشد', error });
+        res.status(401).send({ message: 'Authentication failure', error });
       }
     }
   } catch (error) {
