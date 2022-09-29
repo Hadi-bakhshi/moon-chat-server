@@ -1,0 +1,18 @@
+# dependencies
+/node_modules
+
+# production
+/build
+
+# logs
+/logs
+/*.log
+*.log
+.log
+
+# misc
+.env
+
+.idea
+
+.vscode
