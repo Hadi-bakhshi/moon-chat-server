@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import * as socket from 'socket.io';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import apiRouter from './routes/api';
 
 const app = expres();
 dotenv.config();
@@ -25,6 +26,7 @@ mongoose
   .then(() => console.log('Connected to DB'))
   .catch((err) => console.error(err));
 
+app.use('/api', apiRouter);
 app.get('/test', (req: Request, res: Response) => {
   return res.json({
     statusCode: 200,
@@ -83,7 +85,6 @@ io.on('connection', (socket) => {
     io.emit('getUsers', users);
   });
 });
-
 
 process.on('uncaughtException', (error, source) => {
   console.error('uncaughtException');
